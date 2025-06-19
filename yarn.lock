@@ -1857,6 +1857,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"flash-memo@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "flash-memo@workspace:."
+  dependencies:
+    "@rspack/cli": "npm:^1.3.15"
+    "@rspack/core": "npm:^1.3.15"
+    "@types/node": "npm:^24.0.3"
+    typescript: "npm:^5.8.3"
+    vitest: "npm:^3.2.4"
+  languageName: unknown
+  linkType: soft
+
 "follow-redirects@npm:^1.0.0":
   version: 1.15.9
   resolution: "follow-redirects@npm:1.15.9"
@@ -3551,18 +3563,6 @@ __metadata:
   checksum: 10c0/7570ee855aecb73185a672ecf3eb1c287a6512bf5476449388433b2d4debcf78100bc8bfd439b0edd38d2bc3bfb8341de5ce85b8557dec66d0f27b962c9a8bc1
   languageName: node
   linkType: hard
-
-"throttle-cache@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "throttle-cache@workspace:."
-  dependencies:
-    "@rspack/cli": "npm:^1.3.15"
-    "@rspack/core": "npm:^1.3.15"
-    "@types/node": "npm:^24.0.3"
-    typescript: "npm:^5.8.3"
-    vitest: "npm:^3.2.4"
-  languageName: unknown
-  linkType: soft
 
 "thunky@npm:^1.0.2":
   version: 1.1.0

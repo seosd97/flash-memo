@@ -1,16 +1,16 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { throttleCall } from "./index";
+import { flashMemo } from "./index";
 
-describe("throttleCall", () => {
+describe("flashMemo", () => {
   beforeEach(() => {
     vi.useFakeTimers();
   });
 
   it("should call the function immediately on first call", async () => {
     const mockFn = vi.fn().mockResolvedValue("result");
-    const throttled = throttleCall(mockFn, 1000);
+    const memoized = flashMemo(mockFn, 1000);
 
-    const result = await throttled("arg1");
+    const result = await memoized("arg1");
 
     expect(mockFn).toHaveBeenCalledTimes(1);
     expect(mockFn).toHaveBeenCalledWith("arg1");
@@ -22,10 +22,10 @@ describe("throttleCall", () => {
       .fn()
       .mockResolvedValueOnce("first")
       .mockResolvedValueOnce("second");
-    const throttled = throttleCall(mockFn, 1000);
+    const memoized = flashMemo(mockFn, 1000);
 
-    const result1 = await throttled("arg1");
-    const result2 = await throttled("arg2");
+    const result1 = await memoized("arg1");
+    const result2 = await memoized("arg2");
 
     expect(mockFn).toHaveBeenCalledTimes(1);
     expect(result1).toEqual(result2);
@@ -36,11 +36,11 @@ describe("throttleCall", () => {
       .fn()
       .mockResolvedValueOnce("first")
       .mockResolvedValueOnce("second");
-    const throttled = throttleCall(mockFn, 1000);
+    const memoized = flashMemo(mockFn, 1000);
 
-    await throttled("arg1");
+    await memoized("arg1");
     vi.advanceTimersByTime(1000);
-    const result = await throttled("arg2");
+    const result = await memoized("arg2");
 
     expect(mockFn).toHaveBeenCalledTimes(2);
     expect(result).toBe("second");
@@ -48,28 +48,28 @@ describe("throttleCall", () => {
 
   it("should use default delay of 1000ms", async () => {
     const mockFn = vi.fn().mockResolvedValue("result");
-    const throttled = throttleCall(mockFn);
+    const memoized = flashMemo(mockFn);
 
-    await throttled();
-    await throttled();
+    await memoized();
+    await memoized();
 
     expect(mockFn).toHaveBeenCalledTimes(1);
   });
 
   it("should handle function rejections", async () => {
     const mockFn = vi.fn().mockRejectedValue(new Error("test error"));
-    const throttled = throttleCall(mockFn, 1000);
+    const memoized = flashMemo(mockFn, 1000);
 
-    await expect(throttled()).rejects.toThrow("test error");
+    await expect(memoized()).rejects.toThrow("test error");
   });
 
   it("should return same promise for concurrent calls within delay", async () => {
     const mockFn = vi.fn().mockResolvedValue("result");
-    const throttled = throttleCall(mockFn, 1000);
+    const memoized = flashMemo(mockFn, 1000);
 
     const [result1, result2] = await Promise.all([
-      throttled("arg1"),
-      throttled("arg2"),
+      memoized("arg1"),
+      memoized("arg2"),
     ]);
 
     expect(mockFn).toHaveBeenCalledTimes(1);

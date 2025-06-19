@@ -1,5 +1,5 @@
 {
-  "name": "throttle-cache",
+  "name": "flash-memo",
   "version": "0.0.1",
   "main": "src/index.ts",
   "author": "seosd97",
